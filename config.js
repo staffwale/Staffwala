@@ -1,3 +1,9 @@
-// DEMO_MODE true  = OTP 123456 (SMS nahi jaata). Pehle isse test karein.
-// DEMO_MODE false = asli SMS OTP (Netlify Functions + MSG91 chahiye, README dekhein).
-window.SW_CONFIG = { DEMO_MODE: true, API: '/.netlify/functions' };
+// Supabase dashboard > Project Settings > API se ye 2 value copy karein.
+// anon key public hoti hai (RLS se surakshit). service_role key yahan KABHI na daalein.
+window.SW_CONFIG = {
+  SUPABASE_URL: 'https://YOUR-PROJECT.supabase.co',
+  SUPABASE_ANON_KEY: 'YOUR-ANON-KEY',
+  WHATSAPP: '',                          // apna WhatsApp number 91 ke saath, jaise '919876543210'. Khali chhodne par button nahi dikhta
+  INSTAGRAM: '',  // apna Instagram link. Khali chhodne par button nahi dikhta
+  FACEBOOK: ''     // apna Facebook link. Khali chhodne par button nahi dikhta
+};

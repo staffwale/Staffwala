@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<script>try{if(!JSON.parse(localStorage.getItem('sw_sess')))location.replace('index.html')}catch(e){location.replace('index.html')}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>StaffWale – Hotel & Restaurant Staff Jobs</title>
@@ -141,6 +140,8 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 .hid{display:none}
 @media (max-width:820px){.hero,.forms{grid-template-columns:1fr}.roles,.steps{grid-template-columns:repeat(2,1fr)}}
 </style>
+<style>
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -198,7 +199,7 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
   </svg>
 </header>
 
-<div class="trust"><span>✔ ID verified partners</span><span>⏱ Ghante ke hisaab se booking</span><span>💸 Turant wallet payout</span><span>🎁 Referral par 50% off</span></div>
+<div class="trust"><span>✔ ID verified partners</span><span>⏱ Ghante ke hisaab se booking</span><span>💸 Turant wallet payout</span><span>🎁 Referral par discount</span></div>
 
 <section id="rates">
 <h2>Rates</h2>
@@ -207,9 +208,8 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 <div class="step"><b>Waiter</b><span class="price">₹400</span>Base fare (pehle 4 ghante). Uske baad ₹100 per ghanta. Custom add-on ₹100 ke steps mein.</div>
 <div class="step"><b>Housekeeping</b><span class="price">₹150 / ghanta</span>Ghante ke hisaab se, minimum 2 ghante.</div>
 <div class="step"><b>Cook, Bartender, Barista, aur baaki</b><span class="price">Apna budget</span>Aap budget batayein, partner accept karta hai.</div>
-<div class="step"><b>Referral offer</b><span class="price">50% off</span>Customer refer karein, dono ko fayda.</div>
+<div class="step"><b>Referral offer</b><span class="price">Referral</span>Dost ko pehli booking par 50% off (ek limit tak). Dost ki booking poori hone par aapko bhi.</div>
 </div>
-<p class="note" style="margin-top:10px">Ye demo rates hain. Asli rates JS mein hCalc function mein badle ja sakte hain.</p>
 </section>
 
 <section id="book">
@@ -253,7 +253,7 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 <label class="chk"><input type="checkbox" id="sFree">Sirf free staff</label>
 </div>
 <div class="jobs" id="stList"></div>
-<p class="note" style="margin-top:10px">Demo profiles ("demo") sirf dikhane ke liye hain; unke numbers asli nahi hain.</p>
+
 </section>
 
 <section id="roles">
@@ -290,20 +290,10 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
       <label>Shehar<input id="pCity" required value="Jaipur" maxlength="40"></label>
       <label>Pay (₹ per shift)<input id="pPay" type="number" min="100" required placeholder="800"></label>
       <label>Date<input id="pDate" type="date" required></label>
-      <label>Mobile number<input id="pPhone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required placeholder="10 digit"></label>
-      <button class="btn" type="submit">Job post karein</button>
+            <button class="btn" type="submit">Job post karein</button>
       <p class="ok" id="pOk" role="status"></p>
     </form>
-    <form id="join" autocomplete="off">
-      <h2 style="font-size:24px">Partner banein</h2>
-      <label>Naam<input id="jName" required maxlength="50"></label>
-      <label>Aapki post<select id="jRole" required></select></label>
-      <label>Shehar<input id="jCity" required value="Jaipur" maxlength="40"></label>
-      <label>Experience (saal)<input id="jExp" type="number" min="0" max="40" value="1"></label>
-      <label>Mobile number<input id="jPhone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required placeholder="10 digit"></label>
-      <button class="btn" type="submit">Register karein</button>
-      <p class="ok" id="jOk" role="status"></p>
-    </form>
+    
   </div>
 </section>
 
@@ -332,8 +322,6 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 <div class="idrow"><span>Partner ID: <b id="pid"></b></span><span class="badge">unverified</span></div>
 <div class="stabs">
 <button class="stab" data-s="x" data-p="Personal" aria-selected="true">Personal</button>
-<button class="stab" data-p="Work" aria-selected="false">Work</button>
-<button class="stab" data-p="ID" aria-selected="false">ID Card</button>
 </div>
 <div class="spane on" id="sp-Personal">
 <form id="fPer" autocomplete="off">
@@ -348,46 +336,17 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 <p class="ok" id="fPerOk" role="status"></p>
 </form>
 </div>
-<div class="spane" id="sp-Work">
-<div class="box">
-<div id="wkList" style="display:grid;gap:12px"></div>
-<button class="linkbtn" id="addRest" type="button">⊕ Add Restaurant</button>
-<button class="btn" id="wkSave" type="button">Save</button>
-<p class="ok" id="wkOk" role="status"></p>
-</div>
-</div>
-<div class="spane" id="sp-ID">
-<form id="fId" autocomplete="off">
-<label>ID Type<select id="fIdType"><option>Aadhaar card</option><option>PAN card</option><option>Driving licence</option><option>Voter ID</option></select></label>
-<label>ID Number<input id="fIdNo" inputmode="numeric" maxlength="20" required></label>
-<label>ID photo – front<input id="fImg1" type="file" accept="image/*"></label>
-<img id="pv1" class="hid" alt="ID front preview" style="max-width:100%;border-radius:10px">
-<label>ID photo – back<input id="fImg2" type="file" accept="image/*"></label>
-<img id="pv2" class="hid" alt="ID back preview" style="max-width:100%;border-radius:10px">
-<button class="btn" type="submit">Save</button>
-<p class="note">Demo: ID number aur photo is browser mein save nahi hoti. Asli site par ye encrypted server par jaani chahiye.</p>
-<p class="ok" id="fIdOk" role="status"></p>
-</form>
-</div>
 </div>
 
 <div class="pane" id="pane-Bookings">
 <h3 style="margin-bottom:6px">My Bookings</h3>
-<p class="note" style="margin-bottom:8px">Live jobs mein Apply karne par booking yahan aati hai. Kaam ke baad "Completed" dabayein, kamai wallet mein jaati hai (demo).</p>
+<p class="note" style="margin-bottom:8px">Accept ki hui bookings yahan dikhti hain. Customer "Kaam ho gaya" confirm karta hai to paisa (platform fee ke baad) wallet mein aata hai.</p>
 <div id="bkList"></div>
 </div>
 
 <div class="pane" id="pane-Wallet">
 <div style="text-align:center">You have</div>
 <div class="big" id="wBal">₹0</div>
-<div class="stepper"><button class="rb m" id="wMinus" aria-label="Kam karein">−</button><span id="wAmt">Add ₹300</span><button class="rb p" id="wPlus" aria-label="Badhayein">+</button></div>
-<div class="modes" role="radiogroup" aria-label="Payment mode">
-<label class="mode"><input type="radio" name="pm" value="UPI" checked>UPI (GPay, PhonePe, Paytm)</label>
-<label class="mode"><input type="radio" name="pm" value="Debit/Credit Card">Debit / Credit Card</label>
-<label class="mode"><input type="radio" name="pm" value="Net Banking">Net Banking</label>
-</div>
-<button class="paybtn" id="wPay">Pay ₹309<small>3% bank charges added</small></button>
-<p class="note" style="margin-top:8px">Demo payment: asli paisa nahi katega. Live karne ke liye Razorpay / Cashfree jaisa payment gateway jodna hoga.</p>
 <p class="ok" id="wMsg" role="status"></p>
 <div class="lnk"><button id="lkBank">Bank Details →</button><button id="lkWd">Withdraw Money →</button></div>
 <form id="bankBox" class="hid" autocomplete="off">
@@ -414,14 +373,14 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 <h3 style="margin-bottom:10px">My Rating</h3>
 <div class="tiles">
 <div class="tile"><b id="t1">0</b>Bookings completed</div><div class="tile"><b id="t2">0</b>Bookings accepted</div>
-<div class="tile"><b id="t3">0</b>Bookings cancelled</div><div class="tile"><b>0</b>Cancelled same day</div>
+<div class="tile"><b id="t3">0</b>Total kamai (₹)</div><div class="tile"><b id="t4">0</b>Wallet balance (₹)</div>
 </div>
 <div class="empty" style="margin-top:12px">No ratings received.</div>
 </div>
 
 <div class="pane" id="pane-Payouts">
 <h3 style="margin-bottom:6px">Payouts</h3>
-<p class="note" style="margin-bottom:10px">Wallet se Withdraw Money karne par request yahan dikhegi. Demo mein status "Processing" hi rehta hai; asli payout admin approve karke bhejta hai.</p>
+<p class="note" style="margin-bottom:10px">Wallet se Withdraw Money karne par request yahan dikhegi. Admin bank ya UPI se paisa bhejkar status "Paid" karta hai.</p>
 <div id="oList"></div>
 </div>
 </div>
@@ -443,33 +402,17 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 <p class="sub">Seedhe jawab.</p>
 <details><summary>Booking kaise milegi?</summary><p>Register karein, profile poori bharein aur Live jobs mein apni post ki job par Apply karein.</p></details>
 <details><summary>Payment kaise milegi?</summary><p>Booking Completed hone par kamai wallet mein aati hai. Wahan se Bank Details bharkar Withdraw Money karein.</p></details>
-<details><summary>Kya helper saath ja sakta hai?</summary><p>Haan, Dashboard mein helper add karne ka option aayega (abhi demo mein nahi hai).</p></details>
+<details><summary>Kya helper saath ja sakta hai?</summary><p>Abhi alag se helper add karne ka option nahi hai. Helper chahiye to "Helper" post ke liye alag booking karein.</p></details>
 <details><summary>Owner staff kaise bulaye?</summary><p>Owner ke taur par register karein aur "Job post karein" form bharein. Post turant Live jobs mein dikhti hai.</p></details>
 </section>
 
 <section>
 <div class="refer">
-<div><h2>Refer a Friend</h2><p style="margin:0">Customer dost ko refer karein: dost ki pehli booking par <b>50% off</b>, aur dost booking kare to aapki agli booking par bhi <b>50% off</b>. Aapka code: <code id="refCode">SW</code></p></div>
+<div><h2>Refer a Friend</h2><p style="margin:0">Customer dost ko refer karein: dost ki pehli booking par <b>50% off</b> (ek limit tak), aur dost ki booking <b>poori hone par</b> aapki agli booking par bhi <b>50% off</b> (limit tak). Aapka code: <code id="refCode">SW</code></p></div>
 <div class="share"><a class="sh wa" id="shWa" target="_blank" rel="noopener">WhatsApp par bhejein</a><a class="sh fb" id="shFb" target="_blank" rel="noopener">Facebook</a><a class="sh ig" id="shIg" target="_blank" rel="noopener">Instagram</a><button class="sh" id="refCopy" type="button">Code copy karein</button></div>
 </div>
 </section>
 
-<dialog id="authDlg" aria-labelledby="aTitle">
-<div style="display:flex;justify-content:space-between;align-items:center"><h2 id="aTitle" style="font-size:24px">StaffWale account</h2><button type="button" id="aClose" class="rb" style="background:var(--line);color:var(--ink);width:34px;height:34px;font-size:20px" aria-label="Band karein">×</button></div>
-<div class="amodes"><button type="button" class="am" data-m="login" aria-selected="true">Login</button><button type="button" class="am" data-m="register" aria-selected="false">Register</button></div>
-<form id="authForm" style="border:0;padding:0;background:none" autocomplete="off">
-<label class="reg hid">Naam<input id="aName" maxlength="50"></label>
-<label class="reg hid">Aap kaun hain?<select id="aRole"><option value="Partner">Partner – mujhe kaam chahiye</option><option value="Customer">Customer – ghar par booking chahiye</option><option value="Owner">Owner – restaurant/hotel ke liye staff chahiye</option></select></label>
-<label class="reg hid">Shehar<input id="aCity" value="Jaipur" maxlength="40"></label>
-<label class="reg hid">Aapki post (sirf Partner ke liye)<select id="aPost"></select></label>
-<label class="reg hid">Referral code (optional, sirf Customer)<input id="aRef" maxlength="12" placeholder="SWXXXXX"></label>
-<label>Mobile number<input id="aMob" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required placeholder="10 digit"></label>
-<label id="aOtpW" class="hid">OTP<input id="aOtp" inputmode="numeric" maxlength="6" placeholder="6 digit OTP"></label>
-<button class="btn" id="aGo" type="submit">OTP bhejein</button>
-<p class="note" id="aMsg" role="status"></p>
-<p class="note">Demo login: asli SMS OTP ke liye SMS provider aur server chahiye. Password nahi liya jaata.</p>
-</form>
-</dialog>
 <dialog id="stDlg" aria-labelledby="stT">
 <div style="display:flex;justify-content:space-between;align-items:center"><h2 id="stT" style="font-size:24px">Staff profile</h2><button type="button" id="stClose" class="rb" style="background:var(--line);color:var(--ink);width:34px;height:34px;font-size:20px" aria-label="Band karein">×</button></div>
 <div id="stBody"></div>
@@ -478,13 +421,8 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 <div style="display:flex;justify-content:space-between;align-items:center"><h2 id="subT" style="font-size:24px">Staff numbers unlock</h2><button type="button" id="subClose" class="rb" style="background:var(--line);color:var(--ink);width:34px;height:34px;font-size:20px" aria-label="Band karein">×</button></div>
 <span class="price">₹99 <small style="font-size:15px;font-weight:400">/ 30 din</small></span>
 <p>Subscription ke baad sabhi waiter, helper aur baaki staff ke numbers dikhte hain, call aur WhatsApp ke saath.</p>
-<div class="modes">
-<label class="mode"><input type="radio" name="sm" value="UPI" checked>UPI (GPay, PhonePe, Paytm)</label>
-<label class="mode"><input type="radio" name="sm" value="Debit/Credit Card">Debit / Credit Card</label>
-<label class="mode"><input type="radio" name="sm" value="Net Banking">Net Banking</label>
-</div>
 <button class="paybtn" id="subPay" type="button">₹99 pay karein</button>
-<p class="note" style="margin-top:8px">Demo payment: asli paisa nahi katta. Live karne ke liye payment gateway chahiye.</p>
+<p class="note" style="margin-top:8px">Payment Razorpay se secure hota hai (UPI, Card, Net Banking). Subscription 30 din ke liye hai.</p>
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 
@@ -505,256 +443,12 @@ summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0;color:var(--mute
 
 <footer>
 <div class="social"><a class="sh ig" id="fIg" target="_blank" rel="noopener">Instagram</a><a class="sh fb" id="fFb" target="_blank" rel="noopener">Facebook</a><a class="sh wa" id="fWa" target="_blank" rel="noopener">WhatsApp</a><a class="sh rv" href="#reviews">★ Review do</a></div>
-© StaffWale · Demo website. Registrations aur posts sirf is browser mein save hote hain.</footer>
+© StaffWale · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="refund.html">Refund policy</a></footer>
 </div>
 
-<script>
-var ROLES=[
- {n:"Waiter",e:"🍽️",c:"#fde9b0",d:"Table service"},
- {n:"Bartender",e:"🍸",c:"#f6c9d0",d:"Cocktails & bar"},
- {n:"Barista",e:"☕",c:"#e7d3bd",d:"Coffee & café"},
- {n:"Chef",e:"👨‍🍳",c:"#d6ecd9",d:"Kitchen & cooking"},
- {n:"Housekeeping",e:"🧹",c:"#cfe6f5",d:"Rooms & cleaning"},
- {n:"GRE",e:"🛎️",c:"#e5dcf5",d:"Guest relations"},
- {n:"Helper",e:"🧺",c:"#ffe0c2",d:"Kitchen / floor helper"},
- {n:"Security",e:"💂",c:"#d9dde3",d:"Guard & gate"}
-];
-var SEED=[
- {role:"Waiter",venue:"Rajwada Dine",city:"Jaipur",pay:800,date:"2026-10-14",phone:""},
- {role:"Bartender",venue:"Sky Lounge",city:"Jaipur",pay:1500,date:"2026-10-15",phone:""},
- {role:"Chef",venue:"Spice Court",city:"Jaipur",pay:2000,date:"2026-10-16",phone:""},
- {role:"Housekeeping",venue:"Pink City Inn",city:"Jaipur",pay:700,date:"2026-10-14",phone:""},
- {role:"Barista",venue:"Bean Street",city:"Jaipur",pay:900,date:"2026-10-17",phone:""},
- {role:"Security",venue:"Grand Haveli",city:"Jaipur",pay:850,date:"2026-10-15",phone:""}
-];
-var KEY="staffwale_jobs",JKEY="staffwale_partners",filter="All";
-function load(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):[]}catch(e){return[]}}
-function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-var extra=load(KEY);
-function info(n){return ROLES.filter(function(r){return r.n===n})[0]||ROLES[0]}
-function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
-function counts(n){return SEED.concat(extra).filter(function(j){return j.role===n}).length}
-function renderRoles(){
-  document.getElementById("roleGrid").innerHTML=ROLES.map(function(r){
-    return '<button class="role" data-r="'+r.n+'"><div class="ic" style="background:'+r.c+'">'+r.e+'</div><b>'+r.n+'</b><small>'+r.d+' · '+counts(r.n)+' jobs</small></button>';
-  }).join("");
-}
-function renderChips(){
-  var all=["All"].concat(ROLES.map(function(r){return r.n}));
-  document.getElementById("chips").innerHTML=all.map(function(n){
-    return '<button class="chip" data-f="'+n+'" aria-pressed="'+(n===filter)+'">'+n+'</button>';
-  }).join("");
-}
-function renderJobs(){
-  var s=($("jq")?$("jq").value:"").toLowerCase();var list=extra.concat(SEED).filter(function(j){return (filter==="All"||j.role===filter)&&(!j.cid||cbSt(j.cid)!=='Completed')&&(j.role+" "+j.venue+" "+j.city).toLowerCase().indexOf(s)>-1});if($("jsort")&&$("jsort").value==="pay")list=list.slice().sort(function(a,b){return b.pay-a.pay});
-  var el=document.getElementById("jobList");
-  if(!list.length){el.innerHTML='<div class="empty">Is post ki abhi koi job nahi hai. Neeche form se pehli job post karein.</div>';return}
-  el.innerHTML=list.map(function(j){
-    var r=info(j.role);
-    var key=j.id||(j.role+'|'+j.venue+'|'+j.date);var call=(j.phone?'<a class="btn alt" href="tel:'+esc(j.phone)+'">Call karein</a>':'')+'<button class="btn" data-apply="'+q(key)+'">'+(applied(key)?'Applied ✓':'Apply karein')+'</button>';
-    return '<article class="job"><div class="top"><div class="em" style="background:'+r.c+'">'+r.e+'</div><div><h3>'+j.role+'</h3><div class="meta">'+esc(j.venue)+', '+esc(j.city)+'</div></div></div><div class="pay">₹'+j.pay+(j.hours?' total':' / shift')+'</div><div class="meta">Date: '+j.date+(j.time?' · '+j.time:'')+(j.guests?' · '+j.guests+' log':'')+(j.hours?' · '+j.hours+' hrs':'')+'</div>'+(j.home?'<div class="meta">🏠 Ghar par booking</div>':'')+call+'</article>';
-  }).join("");
-}
-function fillSelects(){
-  var o=ROLES.map(function(r){return '<option>'+r.n+'</option>'}).join("");
-  document.getElementById("pRole").innerHTML=o;document.getElementById("jRole").innerHTML=o;
-}
-function renderAll(){renderRoles();renderChips();renderJobs()}
-document.addEventListener("click",function(e){
-  var r=e.target.closest(".role"),c=e.target.closest(".chip");
-  if(r){filter=r.dataset.r;renderChips();renderJobs();document.getElementById("jobs").scrollIntoView()}
-  if(c){filter=c.dataset.f;renderChips();renderJobs()}
-});
-document.getElementById("post").addEventListener("submit",function(e){
-  e.preventDefault();
-  if(!U){toast('Job post karne ke liye pehle login karein.');openAuth('login');return}
-  extra.unshift({role:pRole.value,venue:pVenue.value.trim(),city:pCity.value.trim(),pay:+pPay.value,date:pDate.value,phone:pPhone.value});
-  save(KEY,extra);filter=pRole.value;renderAll();
-  pOk.textContent="Job post ho gayi. Live jobs mein dekhein.";
-  e.target.reset();pCity.value="Jaipur";
-});
-document.getElementById("join").addEventListener("submit",function(e){
-  e.preventDefault();
-  var p=load(JKEY);p.push({name:jName.value.trim(),role:jRole.value,city:jCity.value.trim(),exp:jExp.value,phone:jPhone.value});save(JKEY,p);
-  jOk.textContent="Register ho gaya, "+jName.value.trim()+". Booking milte hi call aayega.";
-  e.target.reset();jCity.value="Jaipur";jExp.value=1;
-});
-function $(i){return document.getElementById(i)}
-function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
-function q(s){return esc(s).replace(/"/g,'&quot;')}
-var W=ld('sw_wallet',{bal:0,tx:[],out:[],bank:null}),PR=ld('sw_profile',{id:String(10000+Math.floor(Math.random()*89999)),rest:[{n:'',c:'Jaipur',p:'Bartender'}]}),amt=300,txf='All',TF=['All','Payments','Added','Withdrawn','Security'];
-function sv(){save('sw_wallet',W);save('sw_profile',PR)}
-function today(){return new Date().toISOString().slice(0,10)}
-function say(id,m){$(id).textContent=m}
-function opts(sel){return ROLES.map(function(r){return '<option'+(r.n===sel?' selected':'')+'>'+r.n+'</option>'}).join('')}
-function pv(inp,img){var f=inp.files[0];if(!f)return;var r=new FileReader();r.onload=function(){img.src=r.result;img.classList.remove('hid')};r.readAsDataURL(f)}
-function rP(){
-  $('pid').textContent=PR.id;
-  $('wkList').innerHTML=PR.rest.map(function(r,i){return '<div class="rrow"><label>Restaurant Name<input data-i="'+i+'" data-k="n" value="'+q(r.n)+'"></label><label>City<input data-i="'+i+'" data-k="c" value="'+q(r.c)+'"></label><label>Post<select data-i="'+i+'" data-k="p">'+opts(r.p)+'</select></label></div>'}).join('');
-  if(PR.name)$('fName').value=PR.name;if(PR.mobile)$('fMobile').value=PR.mobile;if(PR.city)$('fCity').value=PR.city;if(PR.age)$('fAge').value=PR.age;if(PR.veh)$('fVeh').value=PR.veh;
-}
-function rW(){
-  $('wBal').textContent='₹'+W.bal;$('wAmt').textContent='Add ₹'+amt;$('wPay').firstChild.textContent='Pay ₹'+Math.round(amt*1.03);
-  $('wTf').innerHTML=TF.map(function(n){return '<button class="chip2" data-t="'+n+'" aria-pressed="'+(n===txf)+'">'+n+'</button>'}).join('');
-  var l=W.tx.filter(function(x){return txf==='All'||x.t===txf});
-  $('wTx').innerHTML=l.length?l.map(function(x){return '<div class="tx"><div><b>'+x.t+'</b><br><span class="meta">'+esc(x.n)+' · '+x.d+'</span></div><b class="'+(x.a<0?'neg':'pos')+'">'+(x.a<0?'-':'+')+'₹'+Math.abs(x.a)+'</b></div>'}).join(''):'<div class="empty">no records</div>';
-  $('oList').innerHTML=W.out.length?W.out.map(function(o){return '<div class="tx"><div><b>₹'+o.a+'</b><br><span class="meta">'+esc(o.to)+' · '+o.d+'</span></div><span class="badge">'+o.st+'</span></div>'}).join(''):'<div class="empty">Abhi koi payout nahi.</div>';
-  if(W.bank){$('bName').value=W.bank.name;$('bIfsc').value=W.bank.ifsc;$('bUpi').value=W.bank.upi||''}
-}
-(function(){
-  var a='';for(var i=18;i<=60;i++)a+='<option'+(i===25?' selected':'')+'>'+i+'</option>';$('fAge').innerHTML=a;
-  var M=['Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'];
-  function bars(lbl){return M.map(function(m){return '<div class="bar"><em style="font-style:normal">'+lbl+'</em><i style="height:2px"></i><span>'+m+'</span></div>'}).join('')}
-  $('eBars').innerHTML=bars('₹0K');$('bBars').innerHTML=bars('0');
-})();
-document.addEventListener('click',function(e){
-  var t=e.target.closest('.dtab,.stab');
-  if(t){var d=t.classList.contains('dtab');
-    document.querySelectorAll(d?'.dtab':'.stab').forEach(function(b){b.setAttribute('aria-selected',b===t)});
-    document.querySelectorAll(d?'.pane':'.spane').forEach(function(p){p.classList.toggle('on',p.id===(d?'pane-':'sp-')+t.dataset.p)})}
-  var c=e.target.closest('.chip2');if(c){txf=c.dataset.t;rW()}
-});
-$('fPhoto').addEventListener('change',function(){pv(this,$('fAv'))});
-$('fImg1').addEventListener('change',function(){pv(this,$('pv1'))});
-$('fImg2').addEventListener('change',function(){pv(this,$('pv2'))});
-$('wkList').addEventListener('input',function(e){var x=e.target;if(x.dataset.i!==undefined)PR.rest[+x.dataset.i][x.dataset.k]=x.value});
-$('addRest').onclick=function(){PR.rest.push({n:'',c:'Jaipur',p:'Waiter'});rP()};
-$('wkSave').onclick=function(){sv();say('wkOk','Work details save ho gayi.')};
-$('fPer').addEventListener('submit',function(e){e.preventDefault();PR.name=$('fName').value.trim();PR.mobile=$('fMobile').value;PR.city=$('fCity').value.trim();PR.age=$('fAge').value;PR.veh=$('fVeh').value;sv();say('fPerOk','Profile save ho gayi.')});
-$('fId').addEventListener('submit',function(e){e.preventDefault();say('fIdOk',$('fIdType').value+' verification ke liye bheja gaya (demo). Status: unverified.');$('fIdNo').value=''});
-$('wMinus').onclick=function(){amt=Math.max(300,amt-300);rW()};
-$('wPlus').onclick=function(){amt=Math.min(10000,amt+300);rW()};
-$('wPay').onclick=function(){var m=document.querySelector('input[name=pm]:checked').value,fee=Math.round(amt*1.03);W.bal+=amt;W.tx.unshift({t:'Added',n:'Paid ₹'+fee+' via '+m,a:amt,d:today()});sv();rW();say('wMsg','Demo payment: ₹'+amt+' wallet mein add hua.')};
-$('lkBank').onclick=function(){$('bankBox').classList.toggle('hid');$('wdBox').classList.add('hid')};
-$('lkWd').onclick=function(){$('wdBox').classList.toggle('hid');$('bankBox').classList.add('hid')};
-$('bankBox').addEventListener('submit',function(e){e.preventDefault();W.bank={name:$('bName').value.trim(),last4:$('bAcc').value.slice(-4),ifsc:$('bIfsc').value.toUpperCase(),upi:$('bUpi').value.trim()};$('bAcc').value='';sv();rW();say('wMsg','Bank details save ho gayi (account ****'+W.bank.last4+').');$('bankBox').classList.add('hid')});
-$('wdBox').addEventListener('submit',function(e){e.preventDefault();var a=Math.floor(+$('wdAmt').value);
-  if(!W.bank){say('wMsg','Pehle Bank Details bharein.');return}
-  if(a>W.bal){say('wMsg','Wallet mein sirf ₹'+W.bal+' hai.');return}
-  W.bal-=a;W.tx.unshift({t:'Withdrawn',n:'To bank ****'+W.bank.last4,a:-a,d:today()});W.out.unshift({a:a,to:'Bank ****'+W.bank.last4+' ('+W.bank.ifsc+')',d:today(),st:'Processing'});
-  sv();rW();$('wdAmt').value='';$('wdBox').classList.add('hid');say('wMsg','Withdraw request bhej di gayi. Payouts tab mein dekhein.')});
-var U=null,USERS=ld('sw_users',[]),BK=ld('sw_bk',[]),mode='login',otpSent=false;
-function applied(k){return BK.some(function(b){return b.k===k&&b.st.indexOf('Cancelled')<0})}
-function toast(m){var t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on')},2800)}
-function lockUI(){$('dashEl').classList.toggle('locked',!U);$('who').classList.toggle('hid',!U);$('authBtn').textContent=U?'Logout':'Login / Register'}
-function setUser(u){if(!u.ref){u.ref='SW'+Math.random().toString(36).slice(2,7).toUpperCase();u.credit=u.credit||0;save('sw_users',USERS)}U=u;PR.name=PR.name||u.name;PR.mobile=PR.mobile||u.mob;$('who').textContent=u.name+' · '+u.role;rP();lockUI();var cu=u.role==='Customer';$('dashEl').classList.toggle('cust',cu);document.querySelector('.dtab[data-p="'+(cu?'Orders':'Profile')+'"]').click();rO();hCalc();rRef();rS();rSub()}
-function setMode(m){mode=m;otpSent=false;$('aOtpW').classList.add('hid');$('aGo').textContent='OTP bhejein';$('aMsg').textContent='';document.querySelectorAll('.reg').forEach(function(x){x.classList.toggle('hid',m!=='register')});document.querySelectorAll('.am').forEach(function(b){b.setAttribute('aria-selected',b.dataset.m===m)})}
-function openAuth(m){setMode(m||'login');$('authDlg').showModal()}
-function rB(){$('bkList').innerHTML=BK.length?BK.map(function(x,i){return '<div class="tx" style="align-items:center"><div><b>'+x.role+'</b> · '+esc(x.venue)+'<br><span class="meta">'+esc(x.city)+' · '+x.date+' · ₹'+x.pay+' · '+x.st+'</span>'+(x.cid&&x.st==='Upcoming'?homeInfo(x.cid):'')+'</div>'+(x.st==='Upcoming'?'<span style="display:flex;gap:6px"><button class="btn" data-do="done" data-bk="'+i+'" style="padding:6px 10px;font-size:14px">Completed</button><button class="btn alt" data-do="cancel" data-bk="'+i+'" style="padding:6px 10px;font-size:14px">Cancel</button></span>':'')+'</div>'}).join(''):'<div class="empty">Koi booking nahi. Live jobs mein Apply karein.</div>'}
-function rE(){var M=['Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'],tot={},cnt={},c=0,a=0,x=0;
-  BK.forEach(function(b){if(b.st==='Completed'){var m=+b.date.slice(5,7);tot[m]=(tot[m]||0)+b.pay;cnt[m]=(cnt[m]||0)+1;c++}if(b.st.indexOf('Cancelled')<0)a++;else x++});
-  function bars(d,f){var mx=1;M.forEach(function(m,i){mx=Math.max(mx,d[i+2]||0)});return M.map(function(m,i){var v=d[i+2]||0;return '<div class="bar"><em style="font-style:normal">'+f(v)+'</em><i style="height:'+(v?Math.max(8,Math.round(v/mx*100)):2)+'px"></i><span>'+m+'</span></div>'}).join('')}
-  $('eBars').innerHTML=bars(tot,function(v){return '₹'+(v/1000).toFixed(1).replace('.0','')+'K'});$('bBars').innerHTML=bars(cnt,function(v){return v});
-  $('t1').textContent=c;$('t2').textContent=a;$('t3').textContent=x}
-document.addEventListener('click',function(e){
-  var am=e.target.closest('.am');if(am)setMode(am.dataset.m);
-  if(e.target.closest('[data-auth]'))openAuth('register');
-  var a=e.target.closest('[data-apply]');
-  if(a){if(!U){toast('Apply karne ke liye login karein.');openAuth('login');return}
-    if(U.role==='Customer'){toast('Apply sirf Partner kar sakte hain.');return}var k=a.dataset.apply;if(applied(k))return;
-    var j=SEED.concat(extra).filter(function(z){return (z.id||(z.role+'|'+z.venue+'|'+z.date))===k})[0];if(!j)return;
-    if(j.cid&&cbSt(j.cid)!=='Open'){toast('Ye booking ab available nahi hai.');renderJobs();return}BK.unshift({k:k,cid:j.cid,role:j.role,venue:j.venue,city:j.city,pay:j.pay,date:j.date,st:'Upcoming',pm:U.mob,pn:U.name,hrs:j.hours,guests:j.guests,slot:j.time});if(j.cid)cbSet(j.cid,'Accepted',U.name);save('sw_bk',BK);renderJobs();rB();rE();toast('Booking accept ho gayi. Dashboard → Bookings dekhein.')}
-  var b=e.target.closest('[data-do]');
-  if(b){var y=BK[+b.dataset.bk];if(!y||y.st!=='Upcoming')return;
-    if(b.dataset.do==='done'){y.st='Completed';if(y.cid)cbSet(y.cid,'Completed');W.bal+=y.pay;W.tx.unshift({t:'Payments',n:'Booking: '+y.role+' at '+y.venue,a:y.pay,d:today()});toast('₹'+y.pay+' wallet mein aaye.')}
-    else{y.st=y.date===today()?'Cancelled same day':'Cancelled';if(y.cid)cbSet(y.cid,'Open','')}
-    save('sw_bk',BK);sv();rB();rW();rE();renderJobs()}
-});
-$('authBtn').onclick=function(){if(U){U=null;save('sw_sess',null);lockUI();rRef();hCalc();rS();rSub();toast('Logout ho gaye.')}else openAuth('login')};
-$('aClose').onclick=function(){$('authDlg').close()};
-$('authForm').addEventListener('submit',function(e){e.preventDefault();
-  var mob=$('aMob').value,u=USERS.filter(function(x){return x.mob===mob})[0],m=$('aMsg');
-  if(!otpSent){
-    if(mode==='login'&&!u){m.textContent='Ye number registered nahi hai. Pehle Register karein.';return}
-    if(mode==='register'&&u){m.textContent='Ye number pehle se registered hai. Login karein.';return}
-    if(mode==='register'&&!$('aName').value.trim()){m.textContent='Naam bharein.';return}
-    var code=$('aRef').value.trim().toUpperCase();
-    if(mode==='register'&&code){if(!USERS.filter(function(x){return x.ref===code&&x.role==='Customer'})[0]){m.textContent='Referral code sahi nahi hai.';return}if($('aRole').value!=='Customer'){m.textContent='Referral offer sirf Customer account par milta hai.';return}}
-    otpSent=true;$('aOtpW').classList.remove('hid');$('aGo').textContent='Verify & Continue';m.textContent='Demo OTP: 123456 (asli SMS nahi bheja jaata).';$('aOtp').focus();return}
-  if($('aOtp').value!=='123456'){m.textContent='OTP galat hai.';return}
-  if(mode==='register'){var cd=$('aRef').value.trim().toUpperCase(),rf2=cd?USERS.filter(function(x){return x.ref===cd})[0]:null;u={mob:mob,name:$('aName').value.trim(),role:$('aRole').value,city:$('aCity').value.trim(),post:$('aPost').value,ref:'SW'+Math.random().toString(36).slice(2,7).toUpperCase(),by:rf2?rf2.mob:'',disc:!!rf2,credit:0,rewarded:false};USERS.push(u);save('sw_users',USERS)}
-  save('sw_sess',u.mob);setUser(u);$('authDlg').close();toast('Swagat hai, '+u.name+'!')});
-$('jq').addEventListener('input',renderJobs);$('jsort').addEventListener('change',renderJobs);
-$('refCopy').onclick=function(){var c=myCode();try{navigator.clipboard.writeText(c).then(function(){toast('Code copy ho gaya: '+c)},function(){toast('Code: '+c)})}catch(e){toast('Code: '+c)}};
-rRef();
-var CB=ld('sw_cb',[]);
-function cbSt(id){var c=CB.filter(function(x){return x.id===id})[0];return c?c.st:'Open'}
-function cbSet(id,st,pn){CB.forEach(function(c){if(c.id===id){c.st=st;if(pn!==undefined)c.pn=pn}});save('sw_cb',CB);rO()}
-function homeInfo(id){var c=CB.filter(function(x){return x.id===id})[0];return c?'<br><span class="meta">🏠 '+esc(c.addr)+' · '+c.guests+' log · '+esc(c.name)+' · '+esc(c.mob)+'</span>':''}
-function rO(){if(!U)return;var l=CB.filter(function(c){return c.mob===U.mob});$('coList').innerHTML=l.length?l.map(function(c){return '<div class="tx" style="align-items:center"><div><b>'+c.role+'</b> · '+c.date+' · '+esc(c.time)+'<br><span class="meta">'+c.guests+' log · '+(c.hours?c.hours+' hrs · ':'')+(c.off?'<s>₹'+c.budget+'</s> ₹'+Math.round(c.budget/2)+' (50% off)':'₹'+c.budget)+' · '+esc(c.city)+'<br>'+esc(c.addr)+(c.pn?'<br>Partner: '+esc(c.pn):'')+'</span></div><span style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><span class="badge'+(c.st==='Accepted'||c.st==='Completed'?' ok2':'')+'">'+(c.st==='Open'?'Partner dhundh rahe hain':c.st)+'</span>'+(c.st==='Open'?'<button class="btn alt" data-co="'+c.id+'" style="padding:6px 10px;font-size:14px">Cancel</button>':'')+'</span></div>'}).join(''):'<div class="empty">Abhi koi booking nahi. Upar "Ghar par booking" form bharein.</div>'}
-$('hRole').innerHTML=opts();$('hDate').min=today();
-$('homeForm').addEventListener('submit',function(e){e.preventDefault();
-  if(!U){toast('Booking ke liye pehle login ya register karein.');openAuth('register');return}
-  if(hCalc()<100){toast('Budget ya ghante sahi bharein.');return}var id='cb'+Date.now(),c={id:id,role:$('hRole').value,date:$('hDate').value,time:$('hTime').value,guests:+$('hGuests').value,addr:$('hAddr').value.trim(),city:$('hCity').value.trim(),budget:hCalc(),hours:hrsRole()?Math.max($('hRole').value==='Housekeeping'?2:1,+$('hHrs').value):0,off:discOn(),notes:$('hNotes').value.trim(),name:U.name,mob:U.mob,st:'Open',pn:''};
-  if(c.off){if(U.disc)U.disc=false;else U.credit=Math.max(0,(U.credit||0)-1)}if(U.by&&!U.rewarded){U.rewarded=true;var rf=USERS.filter(function(x){return x.mob===U.by})[0];if(rf)rf.credit=(rf.credit||0)+1}save('sw_users',USERS);CB.unshift(c);save('sw_cb',CB);
-  extra.unshift({id:id,cid:id,home:true,role:c.role,venue:'Ghar par · '+c.city,city:c.city,pay:c.budget,date:c.date,time:c.time,guests:c.guests,hours:c.hours,phone:''});save(KEY,extra);
-  renderAll();rO();e.target.reset();$('hCity').value='Jaipur';$('hGuests').value=4;XT=0;$('hHrs').value=4;hCalc();
-  say('hOk','Booking bhej di gayi. Partner accept karte hi status badlega.');toast('Booking request bhej di gayi.')});
-document.addEventListener('click',function(e){var b=e.target.closest('[data-co]');if(!b)return;var id=b.dataset.co;cbSet(id,'Cancelled');extra=extra.filter(function(j){return j.id!==id});save(KEY,extra);renderAll();toast('Booking cancel ho gayi.')});
-var SOC={ig:'https://www.instagram.com/staffwale',fb:'https://www.facebook.com/staffwale',wa:'919999999999'},XT=0,RV=ld('sw_rev',[]);
-function myCode(){return U?U.ref:'SW'+PR.id}
-function discOn(){return !!(U&&U.role==='Customer'&&(U.disc||U.credit>0))}
-function hrsRole(){var r=$('hRole').value;return r==='Waiter'||r==='Housekeeping'}
-function hCalc(){var r=$('hRole').value,h=+$('hHrs').value||4,hr=hrsRole(),base=0,txt='';
-  $('hHrsW').classList.toggle('hid',!hr);$('hCalc').classList.toggle('hid',!hr);$('hBudW').classList.toggle('hid',hr);
-  if(r==='Waiter'){base=400+Math.max(0,h-4)*100;txt='Base ₹400 (pehle 4 ghante)'+(h>4?' + ₹'+(h-4)*100+' extra ghante':'')}
-  else if(r==='Housekeeping'){var hh=Math.max(2,h);base=hh*150;txt=hh+' ghante × ₹150 (minimum 2 ghante)'}
-  var fare=hr?base+XT:(+$('hBudget').value||0),off=discOn();
-  $('hBreak').textContent=txt+(XT?' + Custom ₹'+XT:'');$('xTxt').textContent='Custom +₹'+XT;
-  $('hDisc').classList.toggle('hid',!off);if(off)$('hDisc').textContent=U.disc?'🎉 Referral offer: pehli booking par 50% off':'🎁 Refer reward: is booking par 50% off';
-  $('hTotal').innerHTML=fare?'Total ₹'+fare+(off?' → aap dein <b>₹'+Math.round(fare/2)+'</b>':''):'';
-  return fare}
-function rRef(){var c=myCode(),t='StaffWale se ghar par cook, waiter ya housekeeping book karein. Mera code '+c+' use karein aur pehli booking par 50% off paayein! '+location.href;
-  $('refCode').textContent=c;$('shWa').href='https://wa.me/?text='+encodeURIComponent(t);$('shFb').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href)}
-function rR(){$('revAvg').textContent=RV.length?('★ '+(RV.reduce(function(s,r){return s+r.s},0)/RV.length).toFixed(1)+' / 5 · '+RV.length+' reviews'):'Abhi koi review nahi. Pehla review aap dein.';
-  $('revList').innerHTML=RV.length?RV.map(function(r){return '<div class="tx"><div><b>'+esc(r.n)+'</b> <span style="color:#b38f00">'+'★'.repeat(r.s)+'</span><br><span class="meta">'+esc(r.t)+'</span></div><span class="meta">'+r.d+'</span></div>'}).join(''):'<div class="empty">no reviews yet</div>'}
-(function(){var o='';for(var i=1;i<=12;i++)o+='<option'+(i===4?' selected':'')+'>'+i+'</option>';$('hHrs').innerHTML=o;
-  var w='https://wa.me/'+SOC.wa+'?text='+encodeURIComponent('Hi StaffWale, mujhe booking ki jaankari chahiye.');
-  ['fWa','waFab'].forEach(function(i){$(i).href=w});['fIg','shIg'].forEach(function(i){$(i).href=SOC.ig});$('fFb').href=SOC.fb})();
-['hRole','hHrs','hBudget'].forEach(function(i){$(i).addEventListener('input',hCalc)});
-$('xPlus').onclick=function(){XT=Math.min(2000,XT+100);hCalc()};
-$('xMinus').onclick=function(){XT=Math.max(0,XT-100);hCalc()};
-$('revForm').addEventListener('submit',function(e){e.preventDefault();if(!U){toast('Review dene ke liye login karein.');openAuth('login');return}
-  RV.unshift({n:U.name,s:+$('rvStar').value,t:$('rvTxt').value.trim(),d:today()});save('sw_rev',RV);rR();e.target.reset();toast('Review ke liye shukriya!')});
-hCalc();rR();
-var SEEDP=[{n:'Ramesh Kumar',r:'Waiter',c:'Jaipur',x:3,m:'0000000011',s:4.6},{n:'Sunil Meena',r:'Waiter',c:'Jaipur',x:5,m:'0000000022',s:4.8},{n:'Deepak Sharma',r:'Waiter',c:'Jaipur',x:2,m:'0000000033',s:4.3},{n:'Mohan Lal',r:'Helper',c:'Jaipur',x:4,m:'0000000044',s:4.5},{n:'Raju Singh',r:'Helper',c:'Jaipur',x:1,m:'0000000055',s:4.2},{n:'Sita Devi',r:'Housekeeping',c:'Jaipur',x:6,m:'0000000066',s:4.7},{n:'Aman Joshi',r:'Bartender',c:'Jaipur',x:3,m:'0000000077',s:4.6},{n:'Kiran Soni',r:'Barista',c:'Jaipur',x:2,m:'0000000088',s:4.4}];
-var CN=['Rahul S.','Priya M.','Amit K.','Neha J.','Vikas R.','Pooja T.'],DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],curSt='';
-var SV={Waiter:['Party service','Wedding function','House party'],Helper:['Kitchen helper','Event setup','Saaman ka kaam'],Housekeeping:['Ghar ki safai','Deep cleaning','Post-party cleaning'],Bartender:['Cocktail party','Bar service','House party'],Barista:['Coffee counter','Office event','Cafe shift']},SL=['Subah (6am–11am)','Dopahar (11am–4pm)','Shaam (4pm–8pm)','Raat (8pm–12am)'];
-function dstr(o){return new Date(Date.now()+o*864e5).toISOString().slice(0,10)}
-function mk(m){return m.slice(0,2)+'******'+m.slice(-2)}
-function mkName(n){var p=n.trim().split(/\s+/);return p[0]+(p[1]?' '+p[1][0]+'.':'')}
-function subOn(){return !!(U&&U.sub&&U.sub>=today())}
-function seedB(i,s){var o=[-5,-2,2,4],r=[];for(var j=0;j<4;j++){var f=o[j]+(i%3);r.push({d:dstr(f),st:f<0?'Completed':'Upcoming',by:CN[(i+j)%6],svc:SV[s.r][j%3],slot:SL[(i+j)%4],hrs:(s.r==='Waiter'||s.r==='Housekeeping')?[3,4,6,8][(i+j)%4]:0,g:[10,25,40,60][(i+j)%4]})}return r}
-function staffAll(){var a=SEEDP.map(function(s,i){return {id:'s'+i,n:s.n,r:s.r,c:s.c,x:s.x,m:s.m,s:s.s,demo:true,b:seedB(i,s)}});
-  USERS.filter(function(u){return u.role==='Partner'}).forEach(function(u){a.push({id:'u'+u.mob,n:u.name,r:u.post||'Partner',c:u.city,x:0,m:u.mob,s:0,demo:false,b:BK.filter(function(b){return b.pm===u.mob&&b.st.indexOf('Cancelled')<0}).map(function(b){var c=CB.filter(function(z){return z.id===b.cid})[0];return {d:b.date,st:b.st,by:c?mkName(c.name):'Owner / venue',svc:b.cid?b.role+' (ghar par)':b.role+' at '+b.venue,slot:b.slot||'',hrs:b.hrs||0,g:b.guests||0}})})});return a}
-function busy(s,d){return s.b.some(function(x){return x.d===d})}
-function rSub(){$('subBar').innerHTML=subOn()?'<span>✅ Subscription active · <b>'+U.sub+'</b> tak · saare staff ke numbers unlock hain.</span>':'<span>🔒 Staff ke numbers hidden hain. <b>₹99 / 30 din</b> ka subscription lekar unlock karein.</span><button class="btn" type="button" data-sub>₹99 mein unlock karein</button>'}
-function rS(){var role=$('sRole').value,d=$('sDate').value||today(),fr=$('sFree').checked;
-  var l=staffAll().filter(function(s){return (role==='All'||s.r===role)&&(!fr||!busy(s,d))});
-  $('stList').innerHTML=l.length?l.map(function(s){var b=busy(s,d),ri=info(s.r);
-    return '<article class="job"><div class="top"><div class="em" style="background:'+ri.c+'">'+ri.e+'</div><div><h3>'+esc(s.n)+(s.demo?' <small class="meta">(demo)</small>':'')+'</h3><div class="meta">'+esc(s.r)+' · '+esc(s.c||'')+'</div></div></div><div class="meta">'+(s.s?'★ '+s.s+' · ':'')+s.b.length+' bookings · '+(s.x?s.x+' saal':'Naya partner')+'</div><div><span class="badge'+(b?'':' ok2')+'">'+(b?'Booked':'Free')+' · '+d+'</span></div><div class="meta">📞 '+(subOn()?esc(s.m)+(s.demo?' (demo)':''):mk(s.m)+' 🔒')+'</div><button class="btn" data-st="'+s.id+'" type="button">Profile dekhein</button></article>'}).join(''):'<div class="empty">Is date par koi free staff nahi mila.</div>'}
-function rST(id){curSt=id;var s=staffAll().filter(function(x){return x.id===id})[0];if(!s)return;var ri=info(s.r),up=s.b.filter(function(x){return x.st==='Upcoming'}).sort(function(a,b){return a.d<b.d?-1:1}),dn=s.b.filter(function(x){return x.st==='Completed'}).sort(function(a,b){return a.d<b.d?1:-1});
-  function row(x){return '<div class="tx"><div><b>'+x.d+'</b> <span class="badge'+(x.st==='Completed'?' ok2':'')+'">'+x.st+'</span><br><span class="meta">By '+esc(x.by)+' · '+esc(x.svc)+(x.slot?' · '+esc(x.slot):'')+(x.hrs?' · '+x.hrs+' hrs':'')+(x.g?' · '+x.g+' log':'')+'</span></div></div>'}
-  var days='';for(var i=0;i<7;i++){var d=dstr(i),bz=busy(s,d);days+='<div class="dy '+(bz?'busy':'free')+'"><b>'+DN[new Date(d+'T00:00:00Z').getUTCDay()]+'</b>'+d.slice(8)+'/'+d.slice(5,7)+'<br>'+(bz?'Booked':'Free')+'</div>'}
-  var ct=subOn()?'<div class="disc">📞 '+esc(s.m)+(s.demo?' (demo number)':'')+'</div>'+(s.demo?'':'<div class="share" style="margin-top:8px"><a class="sh" href="tel:'+esc(s.m)+'">Call</a><a class="sh wa" target="_blank" rel="noopener" href="https://wa.me/91'+esc(s.m)+'">WhatsApp</a></div>'):'<div class="lockbox"><div>🔒 <b>'+mk(s.m)+'</b><br><span class="meta">Number dekhne ke liye ₹99 subscription chahiye.</span></div><button class="btn" data-sub type="button">₹99 mein unlock karein</button></div>';
-  $('stBody').innerHTML='<div class="top" style="display:flex;gap:12px;align-items:center;margin:10px 0"><div class="em" style="width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-size:30px;background:'+ri.c+'">'+ri.e+'</div><div><h3 style="font-size:21px">'+esc(s.n)+'</h3><div class="meta">'+esc(s.r)+' · '+esc(s.c||'')+' · '+(s.x?s.x+' saal experience':'Naya partner')+'</div></div></div>'
-   +'<div class="tiles" style="grid-template-columns:repeat(4,1fr)"><div class="tile"><b>'+s.b.length+'</b>Total</div><div class="tile"><b>'+dn.length+'</b>Complete</div><div class="tile"><b>'+up.length+'</b>Aane wali</div><div class="tile"><b>'+(s.s||'—')+'</b>Rating</div></div>'
-   +ct+'<h3 style="font-size:17px;margin-top:6px">Agle 7 din</h3><div class="days">'+days+'</div>'
-   +'<h3 style="font-size:17px">Aane wali bookings</h3>'+(up.length?up.map(row).join(''):'<div class="empty">Koi upcoming booking nahi, staff free hai.</div>')
-   +'<h3 style="font-size:17px;margin-top:14px">Purani bookings</h3>'+(dn.length?dn.map(row).join(''):'<div class="empty">Abhi koi complete booking nahi.</div>')
-   +'<p class="note" style="margin-top:10px">Customer ke naam chhupe hue hain (jaise "Rahul S."); unke number kabhi nahi dikhte.</p>';
-  if(!$('stDlg').open)$('stDlg').showModal()}
-function openSub(){if(!U){toast('Pehle login ya register karein.');openAuth('register');return}if(U.role==='Partner'){toast('Subscription sirf Customer ya Owner ke liye hai.');return}$('subDlg').showModal()}
-$('sRole').innerHTML='<option>All</option>'+opts();$('aPost').innerHTML=opts();$('sDate').value=today();$('sDate').min=today();
-['sRole','sDate','sFree'].forEach(function(i){$(i).addEventListener('input',rS)});
-document.addEventListener('click',function(e){var a=e.target.closest('[data-st]');if(a){rST(a.dataset.st);return}if(e.target.closest('[data-sub]'))openSub()});
-$('stClose').onclick=function(){$('stDlg').close()};$('subClose').onclick=function(){$('subDlg').close()};
-$('subPay').onclick=function(){var m=document.querySelector('input[name=sm]:checked').value;U.sub=dstr(30);U.subMode=m;save('sw_users',USERS);$('subDlg').close();rS();rSub();if($('stDlg').open)rST(curSt);toast('₹99 subscription active ('+m+', demo). Numbers unlock ho gaye.')};
-rS();rSub();
-rP();rW();rB();rE();
-(function(){var s=ld('sw_sess',null),u=USERS.filter(function(x){return x.mob===s})[0];if(u)setUser(u);else lockUI()})();
-fillSelects();renderAll();
-</script>
-<script>$('authBtn').onclick=function(){try{localStorage.removeItem('sw_sess')}catch(e){}location.href='index.html'};</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

@@ -1,5 +1,11 @@
 [build]
   publish = "."
 
+[build.environment]
+  NODE_VERSION = "20"
+  # SUPABASE_URL config.js mein bhi hai (public hai). Isse Netlify ka secrets-scan deploy na roke.
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL"
+
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
