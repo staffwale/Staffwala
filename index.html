@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StaffWale – Login / Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf8f2;--card:#fff;--ink:#1c1b18;--mute:#6b675c;--line:#e6e1d3;--y:#f2c200;--g:#1f8a4c;--r:#c2321f}
+@media (prefers-color-scheme:dark){:root{--bg:#16150f;--card:#211f17;--ink:#f4f1e6;--mute:#a7a28f;--line:#38352a}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Hind,system-ui,sans-serif;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+h1,h2{font-family:'Bricolage Grotesque',Hind,sans-serif;margin:0;line-height:1.1}
+.shell{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+.side{background:var(--y);color:#1c1b18;padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+.logo{font:800 26px 'Bricolage Grotesque',sans-serif;display:flex;gap:8px;align-items:center}
+.logo i{background:#1c1b18;color:var(--y);border-radius:9px;padding:2px 9px;font-style:normal}
+.side h1{font-size:clamp(32px,4vw,50px);font-weight:800}
+.side p{font-size:18px;margin:14px 0 0;max-width:36ch}
+.side ul{list-style:none;padding:0;margin:0;display:grid;gap:10px;font-weight:600}
+.main{display:grid;place-items:center;padding:32px 18px}
+.card{width:100%;max-width:420px}
+.card h2{font-size:30px;margin-bottom:6px}
+.sub{color:var(--mute);margin:0 0 18px}
+.tabs{display:flex;gap:6px;margin-bottom:18px}
+.tab{flex:1;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px;font:600 16px Hind,sans-serif;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+form{display:grid;gap:14px}
+label{display:grid;gap:4px;font-weight:600;font-size:14px}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;width:100%}
+input:focus-visible,select:focus-visible,.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-weight:400}
+.chk input{width:auto;margin-top:4px}
+.btn{border:0;cursor:pointer;background:var(--y);color:#1c1b18;font:600 17px Hind,sans-serif;padding:13px 20px;border-radius:10px;box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.link{background:none;border:0;color:var(--ink);text-decoration:underline;font:inherit;cursor:pointer;padding:0}
+.link:disabled{color:var(--mute);text-decoration:none;cursor:default}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#msg{min-height:1.5em;margin:0;font-weight:600;color:var(--g)}
+#msg.err{color:var(--r)}
+.demo{background:#fff4c2;color:#5c4a00;border-radius:10px;padding:8px 12px;font-size:14px;margin-bottom:14px}
+.otp{letter-spacing:.5em;text-align:center;font-size:24px;font-weight:600}
+.note{font-size:13px;color:var(--mute);margin:14px 0 0}
+@media (max-width:820px){.shell{grid-template-columns:1fr}.side{padding:22px;gap:14px}.side ul,.side p{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="side">
+  <div class="logo"><i>S</i>StaffWale</div>
+  <div>
+    <h1>Hotel aur restaurant ka staff, ek hi jagah.</h1>
+    <p>Waiter se chef tak. Ghar par booking, ghante ke hisaab se kaam, turant payout.</p>
+  </div>
+  <ul><li>✔ ID verified partners</li><li>⏱ Ghante ke hisaab se booking</li><li>🎁 Referral par 50% off</li></ul>
+</aside>
+<main class="main">
+<div class="card">
+  <div class="demo" id="demoBar" hidden>Demo mode: OTP <b>123456</b> daalein. Asli SMS ke liye README padhein.</div>
+  <h2 id="ttl">Login karein</h2>
+  <p class="sub" id="sub">Apne mobile number se OTP ke saath login karein.</p>
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabL" type="button" role="tab" aria-selected="true">Login</button>
+    <button class="tab" id="tabR" type="button" role="tab" aria-selected="false">Register</button>
+  </div>
+
+  <form id="f1" autocomplete="off">
+    <label class="reg" hidden>Naam<input id="fName" maxlength="50" autocomplete="name"></label>
+    <label class="reg" hidden>Aap kaun hain?
+      <select id="fRole"><option value="Customer">Customer – ghar par booking chahiye</option><option value="Partner">Partner – mujhe kaam chahiye</option><option value="Owner">Owner – restaurant/hotel ke liye staff</option></select>
+    </label>
+    <label id="fPostW" hidden>Aapki post<select id="fPost"></select></label>
+    <label class="reg" hidden>Shehar<input id="fCity" value="Jaipur" maxlength="40"></label>
+    <label id="fRefW" hidden>Referral code (optional)<input id="fRef" maxlength="12" placeholder="SWXXXXX"></label>
+    <label>Mobile number<input id="fMob" inputmode="numeric" maxlength="10" placeholder="10 digit" autocomplete="tel-national" required></label>
+    <label class="chk reg" hidden><input type="checkbox" id="fTerms"><span>Main Terms aur Privacy Policy se sehmat hoon.</span></label>
+    <button class="btn" id="goBtn" type="submit">OTP bhejein</button>
+  </form>
+
+  <form id="f2" hidden>
+    <label>OTP daalein<input id="otpIn" class="otp" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••"></label>
+    <button class="btn" id="verBtn" type="submit">Verify karke aage badhein</button>
+    <div class="row"><button class="link" id="back" type="button">Number badlein</button><button class="link" id="resend" type="button">Dobara bhejein</button></div>
+  </form>
+  <p id="msg" role="status"></p>
+  <p class="note">Aapka number sirf login aur booking ke liye use hota hai.</p>
+</div>
+</main>
+</div>
+<script src="config.js"></script>
+<script>
+(function(){
+var CFG=window.SW_CONFIG||{DEMO_MODE:true,API:'/.netlify/functions'};
+var $=function(i){return document.getElementById(i)};
+function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var USERS=ld('sw_users',[]),sess=ld('sw_sess',null),mode='login',token='',mob='',tm=null;
+if(sess&&USERS.some(function(u){return u.mob===sess}))location.replace('app.html');
+$('demoBar').hidden=!CFG.DEMO_MODE;
+$('fPost').innerHTML=['Waiter','Bartender','Barista','Chef','Housekeeping','GRE','Helper','Security'].map(function(n){return '<option>'+n+'</option>'}).join('');
+function say(m,err){$('msg').textContent=m||'';$('msg').className=err?'err':''}
+function busy(b){$('goBtn').disabled=b;$('verBtn').disabled=b}
+function sync(){
+  var r=mode==='register';
+  document.querySelectorAll('.reg').forEach(function(x){x.hidden=!r});
+  $('fPostW').hidden=!(r&&$('fRole').value==='Partner');
+  $('fRefW').hidden=!(r&&$('fRole').value==='Customer');
+  $('tabL').setAttribute('aria-selected',!r);$('tabR').setAttribute('aria-selected',r);
+  $('ttl').textContent=r?'Naya account banayein':'Login karein';
+  $('sub').textContent=r?'Kuch details bharein, phir OTP se verify karein.':'Apne mobile number se OTP ke saath login karein.';
+  $('goBtn').textContent=r?'Register karke OTP bhejein':'OTP bhejein';
+  say('');
+}
+$('tabL').onclick=function(){mode='login';sync()};
+$('tabR').onclick=function(){mode='register';sync()};
+$('fRole').addEventListener('change',sync);
+function showStep(n){$('f1').hidden=n!==1;$('f2').hidden=n!==2;if(n===2){$('otpIn').value='';$('otpIn').focus();timer()}}
+function timer(){var t=30;$('resend').disabled=true;$('resend').textContent='Dobara bhejein (30s)';clearInterval(tm);
+  tm=setInterval(function(){t--;if(t<=0){clearInterval(tm);$('resend').disabled=false;$('resend').textContent='Dobara bhejein'}else $('resend').textContent='Dobara bhejein ('+t+'s)'},1000)}
+async function post(path,body){
+  var r=await fetch(CFG.API+'/'+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  var d={};try{d=await r.json()}catch(e){}
+  if(!r.ok)throw new Error(d.error||'Server error. Thodi der baad try karein.');
+  return d;
+}
+async function sendOtp(){if(CFG.DEMO_MODE){token='demo';return}var d=await post('send-otp',{mobile:mob});token=d.token}
+async function checkOtp(otp){if(CFG.DEMO_MODE)return otp==='123456';try{var d=await post('verify-otp',{mobile:mob,otp:otp,token:token});return !!d.ok}catch(e){return false}}
+$('f1').addEventListener('submit',async function(e){
+  e.preventDefault();mob=$('fMob').value.trim();
+  if(!/^[6-9]\d{9}$/.test(mob))return say('Sahi 10 digit mobile number daalein.',1);
+  var u=USERS.filter(function(x){return x.mob===mob})[0];
+  if(mode==='login'&&!u)return say('Ye number registered nahi hai. Register tab chunein.',1);
+  if(mode==='register'){
+    if(u)return say('Ye number pehle se registered hai. Login karein.',1);
+    if(!$('fName').value.trim())return say('Naam bharein.',1);
+    if(!$('fTerms').checked)return say('Terms se sehmat hona zaroori hai.',1);
+    var c=$('fRef').value.trim().toUpperCase();
+    if(c&&$('fRole').value==='Customer'&&!USERS.some(function(x){return x.ref===c&&x.role==='Customer'}))return say('Referral code sahi nahi hai.',1);
+  }
+  busy(true);say('OTP bhej rahe hain…');
+  try{await sendOtp();showStep(2);say(CFG.DEMO_MODE?'Demo OTP: 123456':'OTP aapke mobile par bheja gaya.')}catch(err){say(err.message,1)}
+  busy(false);
+});
+$('resend').onclick=async function(){say('OTP bhej rahe hain…');try{await sendOtp();timer();say('OTP dobara bheja gaya.')}catch(err){say(err.message,1)}};
+$('back').onclick=function(){showStep(1);say('')};
+$('f2').addEventListener('submit',async function(e){
+  e.preventDefault();var otp=$('otpIn').value.trim();
+  if(!/^\d{6}$/.test(otp))return say('6 digit OTP daalein.',1);
+  busy(true);
+  if(!(await checkOtp(otp))){busy(false);return say('OTP galat ya expire ho gaya.',1)}
+  var u=USERS.filter(function(x){return x.mob===mob})[0];
+  if(mode==='register'&&!u){
+    var cd=$('fRef').value.trim().toUpperCase(),role=$('fRole').value;
+    var rf=(cd&&role==='Customer')?USERS.filter(function(x){return x.ref===cd&&x.role==='Customer'})[0]:null;
+    u={mob:mob,name:$('fName').value.trim(),role:role,city:$('fCity').value.trim(),post:role==='Partner'?$('fPost').value:'',
+       ref:'SW'+Math.random().toString(36).slice(2,7).toUpperCase(),by:rf?rf.mob:'',disc:!!rf,credit:0,rewarded:false};
+    USERS.push(u);sv('sw_users',USERS);
+  }
+  if(!u){busy(false);return say('Account nahi mila. Register karein.',1)}
+  sv('sw_sess',u.mob);say('Verify ho gaya. App khul raha hai…');
+  location.href='app.html';
+});
+sync();
+})();
+</script>
+</body>
+</html>
